@@ -14,12 +14,24 @@ from trainer import train_loop
 
 @hydra.main(version_base=None, config_path="config")
 def main(config: config_schema.ConfigSchema):
+    """
+    Main function for initializing and running the training of a specified deep learning model on the specified dataset.
+
+    The function uses a Hydra-based configuration approach for setting up the training environment.
+    It loads training and validation data, sets up data transformations, and initializes the model,
+    optimizer, and loss function. The training process is then initiated by calling `train_loop`.
+
+    Args:
+        - config (config_schema.ConfigSchema): A configuration object, defined in 'config_schema.py'
+
+    Returns:
+        - A string indicating the path to the saved best model.
+    """
     print("training with config: \n\n%s", OmegaConf.to_yaml(config))
-    device = config.training.device
 
     image = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'train', 'data_0.npy'))).float()
-    train_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'train', 'mask_0.npy')))
-    val_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'val', 'mask_0.npy')))
+    train_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'train', 'mask_0.npy'))).float()
+    val_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'val', 'mask_0.npy'))).float()
 
     if config.data.crop_volume_size != 0:
         new_size = config.data.crop_volume_size
