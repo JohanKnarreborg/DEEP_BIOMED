@@ -11,6 +11,7 @@ import config_schema
 from utils import extract_label_patches, get_transforms, get_loss_fn
 from trainer import train_loop
 
+torch.cuda.empty_cache()
 
 @hydra.main(version_base=None, config_path="config")
 def main(config: config_schema.ConfigSchema):
