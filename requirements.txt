@@ -8,8 +8,8 @@ torchvision==0.16.1
 wandb==0.16.0
 einops==0.7.0
 scikit-image==0.19.2
-tqdm==4.32.1
-dvc==2.41.1
+tqdm
+dvc
 dvc[gdrive]
 dvc[gs]
 fsspec[gcs]
