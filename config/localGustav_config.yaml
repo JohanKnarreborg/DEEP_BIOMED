@@ -1,9 +1,9 @@
-run_name: localGustav
+run_name: localGustav_full
 defaults:
   - config_schema
 
 data:
-  data_path: /Users/Gustav/Desktop/DesktopV00183/DTU/3rd_exchange/DLBiomed/final_project/DEEP_BIOMED/covid_data.nosync/data
+  data_path: /Users/Gustav/Desktop/DesktopV00183/DTU/3rd_exchange/DLBiomed/final_project/DEEP_BIOMED/covid_data.nosync/full_data
   input_img_size: 48
   crop_volume_size: 256
   prob_foreground_center: 0.95
