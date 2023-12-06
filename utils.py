@@ -1,6 +1,5 @@
 import numpy as np
 from skimage.measure import label as skimage_label, regionprops
-from typing import Tuple, List, Dict
 
 from monai.losses import MaskedDiceLoss
 from monai.transforms import (
@@ -14,11 +13,7 @@ from monai.transforms import (
     RandAxisFlipd,
 )
 
-def extract_label_patches(
-        image: np.ndarray,
-        label: np.ndarray,
-        patch_size: Tuple[int, int, int],
-    ) -> List[Dict[str, np.ndarray]]:
+def extract_label_patches(image, label, patch_size):
     """
     Extract patches from image where label is non-zero.
 
@@ -76,6 +71,21 @@ def extract_label_patches(
     return patches
 
 def get_transforms(patch_size, prob_foreground_center):
+    """
+    Generates transformation pipelines for training and validation datasets.
+
+    For training, this function creates a series of MONAI transforms that include
+    random cropping, rotation, and flipping, tailored to handle 3D medical images
+    and their associated labels/masks. For validation, it ensures the channel
+    dimension is set correctly for the images, labels, and masks.
+
+    Args:
+        - patch_size (tuple): Size of the patches to extract.
+        - prob_foreground_center (float): Probability that center of crop is a labeled foreground voxel (ensures the crops often contain a label)
+
+    Returns:
+        - train_transforms (Tuple[monai.transforms.Compose]): A series of MONAI transforms for training and validation.
+    """
     train_transforms = Compose([
         EnsureChannelFirstd(keys=['image', 'label'], channel_dim='no_channel'),
         CopyItemsd(keys=['label'], times=1, names=['mask']),                                                  # Copy label to new image mask
@@ -96,6 +106,18 @@ def get_transforms(patch_size, prob_foreground_center):
     return train_transforms, val_transforms
 
 def get_loss_fn(loss_fn_name):
+    """
+    Retrieves a specified loss function for model training.
+
+    Args:
+        - loss_fn_name (str): The name of the loss function to retrieve.
+
+    Supported Loss Functions:
+        - "maskedDiceLoss": Returns the MaskedDiceLoss function with background inclusion.
+
+    Returns:
+        - loss_fn (monai.losses): The loss function to use for model training.
+    """
     loss_fn = {
         "maskedDiceLoss": MaskedDiceLoss(include_background=True)
     }
