@@ -1,0 +1,3 @@
+.hydra/
+__pycache__/
+wandb/
