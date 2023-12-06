@@ -29,9 +29,14 @@ def main(config: config_schema.ConfigSchema):
     """
     print("training with config: \n\n%s", OmegaConf.to_yaml(config))
 
-    image = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'train', 'data_0.npy'))).float()
-    train_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'train', 'mask_0.npy'))).float()
-    val_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'val', 'mask_0.npy'))).float()
+    if "full" in config.data.data_path:
+        image = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'train', 'data_0.npy'))).float()
+        train_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'train', 'mask_0.npy'))).float()
+        val_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'val', 'mask_0.npy'))).float()
+    else: # we use the cropped data
+        image = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'train', 'image_256_512.npy'))).float()
+        train_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'train', 'train_label_256_512.npy'))).float()
+        val_label = torch.from_numpy(np.load(os.path.join(config.data.data_path, 'val', 'val_label_256_512.npy'))).float()
 
     if config.data.crop_volume_size != 0:
         new_size = config.data.crop_volume_size
