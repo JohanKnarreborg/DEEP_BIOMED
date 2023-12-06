@@ -3,7 +3,7 @@ defaults:
   - config_schema
 
 data:
-  data_path: /zhome/f9/2/183623/DLBio/covid_data
+  data_path: /home/gustav5_hansen5/DEEP_BIOMED/covid_data.nosync/data
   input_img_size: 96
   crop_volume_size: 256
   prob_foreground_center: 0.95
