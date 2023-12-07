@@ -8,7 +8,7 @@ from monai.data import CacheDataset, DataLoader
 from unetr_monai import UNETR
 from dataset import RepeatedCacheDataset
 import config_schema
-from utils import extract_label_patches, get_transforms, get_loss_fn
+from utils import extract_label_patches, get_transforms, get_loss_fn, get_model
 from trainer import train_loop
 
 torch.cuda.empty_cache()
@@ -80,7 +80,8 @@ def main(config: config_schema.ConfigSchema):
     )
 
     loss_fn = get_loss_fn(config.training.loss_fn_name)
-    model = UNETR(
+    model = get_model(config.model.model_type)
+    model = model(
         img_size=(input_img_size, input_img_size, input_img_size),
         spatial_dims=3,
         in_channels=1,
