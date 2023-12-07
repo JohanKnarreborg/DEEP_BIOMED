@@ -5,7 +5,6 @@ import os
 from omegaconf import OmegaConf
 from monai.data import CacheDataset, DataLoader
 
-from unetr_monai import UNETR
 from dataset import RepeatedCacheDataset
 import config_schema
 from utils import extract_label_patches, get_transforms, get_loss_fn, get_model
@@ -81,12 +80,23 @@ def main(config: config_schema.ConfigSchema):
 
     loss_fn = get_loss_fn(config.training.loss_fn_name)
     model = get_model(config.model.model_type)
-    model = model(
-        img_size=(input_img_size, input_img_size, input_img_size),
-        spatial_dims=3,
-        in_channels=1,
-        out_channels=2
-    )
+    if config.model.model_type == "unet":
+        model = model(
+            spatial_dims=3,
+            in_channels=1,
+            out_channels=2,
+            channels=(64, 128, 256, 512, 1024),
+            strides=(2, 2, 2, 2),
+            num_res_units=2,
+            dropout=0.2,  
+        )
+    else:
+        model = model(
+            img_size=(input_img_size, input_img_size, input_img_size),
+            spatial_dims=3,
+            in_channels=1,
+            out_channels=2
+        )
     model.to(config.training.device)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.optimizer.learning_rate)
 

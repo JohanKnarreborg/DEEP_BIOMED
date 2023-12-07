@@ -1,0 +1,23 @@
+run_name: dtu_hpc_unet
+defaults:
+  - config_schema
+
+data:
+  data_path: /zhome/f9/2/183623/DLBio/covid_data
+  input_img_size: 64
+  crop_volume_size: 256
+  prob_foreground_center: 0.95
+
+training:
+  device: cuda
+  train_batch_size: 16
+  val_batch_size: 16
+  batches_per_epoch: 100
+  num_epochs: 200
+  loss_fn_name: maskedDiceLoss
+
+optimizer:
+  learning_rate: 0.0001
+
+model:
+  model_type: unet
