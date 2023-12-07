@@ -1,5 +1,7 @@
 import numpy as np
 from skimage.measure import label as skimage_label, regionprops
+from unetr_monai import UNETR
+from swinunetr_monai import SwinUNETR
 
 from monai.losses import MaskedDiceLoss
 from monai.transforms import (
@@ -122,3 +124,23 @@ def get_loss_fn(loss_fn_name):
         "maskedDiceLoss": MaskedDiceLoss(include_background=True)
     }
     return loss_fn[loss_fn_name]
+
+def get_model(model_name):
+    """
+    Retrieves a specified model for model training.
+
+    Args:
+        - model_name (str): The name of the model to retrieve.
+
+    Supported Models:
+        - "unetr": Returns the UNETR model.
+        - "swin_unetr": Returns the swin-unetr model.
+    
+    Returns:
+        - model (torch.nn.Module): The model to use for model training.
+    """
+    model = {
+        "unetr": UNETR,
+        "swin_unetr": SwinUNETR
+    }
+    return model[model_name]
