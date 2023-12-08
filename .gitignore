@@ -1,3 +1,6 @@
 .hydra/
 __pycache__/
 wandb/
+errorfiles/*
+outfiles/*
+DLBio_finalProjectv/
