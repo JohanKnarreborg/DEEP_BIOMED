@@ -8,7 +8,7 @@ def main():
     model_name = 'best_model_img_size_64_epoch170.pt'
 
     input_img_size = 64
-    data_path = './covid_data.nosync/crop_data/train/image_256_512.npy'
+    data_path = './covid_data.nosync/full_data/train/data_0.npy'
     image = torch.from_numpy(np.load(data_path)).float()
     #image = image[0:64, 0:64, 0:64]
 
