@@ -8,8 +8,9 @@ def main():
     model_name = 'best_model_img_size_64_epoch170.pt'
 
     input_img_size = 64
-    data_path = 'covid_data.nosync/full_data/train/data_0.npy'
+    data_path = './covid_data.nosync/crop_data/train/image_256_512.npy'
     image = torch.from_numpy(np.load(data_path)).float()
+    #image = image[0:64, 0:64, 0:64]
 
     PATCH_SIZE=(input_img_size,) * 3         # Size of crops
     PROB_FOREGROUND_CENTER=0.95 # Probability that center of crop is a labeled foreground voxel (ensures the crops often contain a label)
@@ -23,12 +24,12 @@ def main():
 
     device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
 
-    checkpoint = torch.load(model_name,map_location=torch.device('cpu') )
+    checkpoint = torch.load('trained_models/'+model_name,map_location=torch.device('cpu') )
     model.load_state_dict(checkpoint['model_state_dict'])
 
     from monai.inferers import sliding_window_inference
 
-    INFERENCE_BATCH_SIZE = 4
+    INFERENCE_BATCH_SIZE = 16
     WINDOW_OVERLAP = 0.5
 
     model.eval()
@@ -49,9 +50,7 @@ def main():
 
     pred = np.uint8(pred[0, 0] * 255)
     #imsave('prediction_'+model_name[:-3]+'_size512.tiff', pred)
-
-    pred = np.uint8(pred[0, 0] * 255)
-
+    print(pred.shape)
     imsave('./inference_output/prediction_'+model_name[:-3]+'.tiff', pred)
 
 
