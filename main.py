@@ -43,9 +43,7 @@ def main(config: config_schema.ConfigSchema):
         image = image[new_size:new_size*2, new_size:new_size*2, new_size:new_size*2]
         train_label = train_label[new_size:new_size*2, new_size:new_size*2, new_size:new_size*2]
         val_label = val_label[new_size:new_size*2, new_size:new_size*2, new_size:new_size*2]
-    
-    # replicate image along channels to use pretrained rgb framework
-    print(config.model.pretrained_model)
+
 
     input_img_size = config.data.input_img_size
     patch_size = (input_img_size,) * 3
@@ -109,6 +107,7 @@ def main(config: config_schema.ConfigSchema):
             out_channels=2
         )
     model.to(config.training.device)
+    print(config.model.pretrained_model)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.optimizer.learning_rate)
 
     print('Starting training')

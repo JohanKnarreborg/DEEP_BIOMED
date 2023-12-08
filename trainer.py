@@ -2,6 +2,7 @@ import wandb
 from time import perf_counter as time
 from tqdm import tqdm
 from monai.networks.utils import one_hot
+from utils import count_parameters
 import os
 import torch
 import datetime
@@ -41,6 +42,10 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
         os.makedirs(model_save_folder)
     else:
         raise ValueError('Model folder already exists - exiting')
+    
+    # log number of model parameters
+    total_params, trainable_params = count_parameters(model)
+    run.log({"total_model_params": total_params, "trainable_model_params": trainable_params})
 
     best_val_loss = float('inf')
     for epoch in range(config.training.num_epochs):

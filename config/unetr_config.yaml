@@ -1,11 +1,11 @@
-run_name: dtu_hpc_swin
+run_name: unetr
 defaults:
   - config_schema
 
 data:
-  data_path: /zhome/f9/2/183623/DLBio/covid_data
+  data_path: /zhome/f9/2/183623/DEEP_BIOMED/covid_data.nosync/crop_data
   input_img_size: 64
-  crop_volume_size: 256
+  crop_volume_size: 0
   prob_foreground_center: 0.95
 
 training:
@@ -20,4 +20,4 @@ optimizer:
   learning_rate: 0.0001
 
 model:
-  model_type: swin_unetr
+  model_type: unetr
