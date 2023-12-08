@@ -35,6 +35,7 @@ class OptimizerConfig:
 @dataclass
 class ModelConfig:
     model_type: str = MISSING
+    pretrained_model: str = "resnet18_3D"
 
 
 @dataclass

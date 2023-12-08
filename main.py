@@ -44,6 +44,9 @@ def main(config: config_schema.ConfigSchema):
         train_label = train_label[new_size:new_size*2, new_size:new_size*2, new_size:new_size*2]
         val_label = val_label[new_size:new_size*2, new_size:new_size*2, new_size:new_size*2]
     
+    # replicate image along channels to use pretrained rgb framework
+    print(config.model.pretrained_model)
+
     input_img_size = config.data.input_img_size
     patch_size = (input_img_size,) * 3
     prob_foreground_center = config.data.prob_foreground_center
@@ -89,6 +92,14 @@ def main(config: config_schema.ConfigSchema):
             strides=(2, 2, 2, 2),
             num_res_units=2,
             dropout=0.2,  
+        )
+    elif config.model.model_type == "pretrained_unet":
+        model = model(
+            encoder_name = config.model.pretrained_model,
+            encoder_weights = "imagenet",
+            classes = 2,
+            activation = "sigmoid",
+            in_channels = 1
         )
     else:
         model = model(

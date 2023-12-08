@@ -5,6 +5,7 @@ from monai.networks.utils import one_hot
 import os
 import torch
 import datetime
+import numpy as np
 from omegaconf import OmegaConf
 
 def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
@@ -49,7 +50,10 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
         t0 = time()
         model.train()
         for batch in tqdm(train_loader):
-            image_b = batch['image'].as_tensor().to(config.training.device)#, non_blocking=True
+            if config.model.pretrained_model is not None:
+                image_b = torch.repeat_interleave(batch["image"], 3, dim=1).to(config.training.device)
+            else:
+                image_b = batch['image'].as_tensor().to(config.training.device)#, non_blocking=True
             label = batch['label'].as_tensor().to(config.training.device)
             mask = batch['mask'].as_tensor().to(config.training.device)
 
@@ -64,7 +68,7 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
             optimizer.zero_grad(set_to_none=None)
 
             mean_train_loss += loss.detach() * len(image_b)
-            run.log({"batch_train_loss": loss})
+            run.log({"batch_train_loss": loss.item()})
             num_samples += len(image_b)
             step += 1
 
@@ -72,7 +76,7 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
         mean_train_loss = mean_train_loss / num_samples
         run.log(
             {"epoch": epoch,
-            "epoch_train_loss": mean_train_loss,
+            "epoch_train_loss": mean_train_loss.item(),
             "epoch_train_time": train_time}
         )
 
@@ -83,7 +87,10 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
             t0 = time()
             model.eval()
             for batch in tqdm(val_loader):
-                image_b = batch['image'].as_tensor().to(config.training.device)
+                if config.model.pretrained_model is not None:
+                    image_b = torch.repeat_interleave(batch["image"], 3, dim=1).to(config.training.device)
+                else:
+                    image_b = batch['image'].as_tensor().to(config.training.device)#, non_blocking=True
                 label = batch['label'].as_tensor().to(config.training.device)
                 mask = batch['mask'].as_tensor().to(config.training.device)
 
@@ -117,7 +124,7 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
 
             val_time = time() - t0
             mean_val_loss = mean_val_loss / num_samples
-            run.log({"epoch_val_loss": mean_val_loss})
+            run.log({"epoch_val_loss": mean_val_loss.item()})
 
             # save best model
             if mean_val_loss.item() < best_val_loss:
@@ -128,7 +135,7 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
                     'epoch': epoch,
                     'model_state_dict': model.state_dict(),
                     'optimizer_state_dict': optimizer.state_dict(),
-                    'loss': mean_val_loss,
+                    'loss': mean_val_loss.item(),
                     }
                 
                 

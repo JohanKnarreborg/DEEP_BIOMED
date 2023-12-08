@@ -1,7 +1,9 @@
 import numpy as np
 from skimage.measure import label as skimage_label, regionprops
-from unetr_monai import UNETR
-from swinunetr_monai import SwinUNETR
+from models.unetr_monai import UNETR
+from models.swinunetr_monai import SwinUNETR
+from models.unet_3D import pretrained_unet_3D
+
 from monai.networks.nets import UNet
 
 from monai.losses import MaskedDiceLoss
@@ -142,6 +144,7 @@ def get_model(model_name):
     """
     model = {
         "unet": UNet,
+        "pretrained_unet": pretrained_unet_3D,
         "unetr": UNETR,
         "swin_unetr": SwinUNETR
     }
