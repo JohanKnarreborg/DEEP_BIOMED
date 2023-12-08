@@ -8,6 +8,7 @@ torchvision==0.16.1
 wandb==0.16.0
 einops==0.7.0
 scikit-image==0.19.2
+pretrainedmodels==0.7.4
 tqdm
 dvc
 dvc[gdrive]
