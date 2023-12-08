@@ -4,3 +4,7 @@ wandb/
 errorfiles/*
 outfiles/*
 DLBio_finalProjectv/
+covid_data.nosync/*
+
+!covid_data.nosync/crop_data/
+!covid_data.nosync/full_data/
