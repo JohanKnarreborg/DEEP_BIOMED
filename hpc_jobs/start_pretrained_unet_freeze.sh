@@ -11,12 +11,12 @@
 # end of BSUB options
 
 module load python3/3.8.17
-python3 -m venv DLBio_finalProjectv
-source DLBio_finalProjectv/bin/activate
+python3 -m venv /zhome/f9/2/183623/DEEP_BIOMED/DLBio_finalProjectv
+source /zhome/f9/2/183623/DEEP_BIOMED/DLBio_finalProjectv/bin/activate
 python3 -m pip install -r /zhome/f9/2/183623/DEEP_BIOMED/requirements.txt
 
 cd /zhome/f9/2/183623/DEEP_BIOMED/covid_data.nosync/crop_data
 dvc pull
 cd /zhome/f9/2/183623/DEEP_BIOMED/
 
-python -u /zhome/f9/2/183623/DEEP_BIOMED/main.py --config-name dtuhpc_pretrained_unet_config
+python -u /zhome/f9/2/183623/DEEP_BIOMED/main.py --config-name pretrained_unet_freeze_config

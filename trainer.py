@@ -2,11 +2,10 @@ import wandb
 from time import perf_counter as time
 from tqdm import tqdm
 from monai.networks.utils import one_hot
-from utils import count_parameters
+from utils import count_parameters, wandb_images
 import os
 import torch
 import datetime
-import numpy as np
 from omegaconf import OmegaConf
 
 def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
@@ -73,7 +72,6 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
             optimizer.zero_grad(set_to_none=None)
 
             mean_train_loss += loss.detach() * len(image_b)
-            run.log({"batch_train_loss": loss.item()})
             num_samples += len(image_b)
             step += 1
 
@@ -85,7 +83,9 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
             "epoch_train_time": train_time}
         )
 
-        if epoch % 10 == 0:
+        # TODO: REMEMBER TO CHANGE
+        # epoch % 10 == 0
+        if epoch is not None:
             mean_val_loss = 0
             num_samples = 0
             step = 0
@@ -110,6 +110,21 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
                 num_samples += len(image_b)
                 step += 1
             
+            logging_figure = wandb_images(image_b, batch['label'], mask, pred, 8)
+            # Save the figure as a PNG file
+            #plt.savefig('plot.png')
+            run.log({"epoch_validation_examples": wandb.Image(logging_figure)})
+
+            # wandb_image = wandb.Image(image_b[0, 0, :, image_b.shape[-1] // 2].numpy(), caption="input volume cross-section")
+            # wandb_label = wandb.Image(label[0, 0, :, :, label.shape[-1] // 2].numpy(), caption="label of cross-section")
+            # wandb_pred = wandb.Image(pred[0, 0, :, :, pred.shape[-1] // 2].numpy(), caption="prediction of cross-section")
+            # images = [wandb_image, wandb_label, wandb_pred]
+            # run.log({
+            #     "epoch_examples": [img for img in images]}
+            # )
+            #torch.save(image_b)
+
+
             # log image_b, its label and its prediction
             # print(f"{image_b.shape=}")
             # print(f"{label.shape=}")

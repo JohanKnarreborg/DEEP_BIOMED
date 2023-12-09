@@ -1,18 +1,18 @@
-run_name: localGustav_full
+run_name: localGustav_crop
 defaults:
   - config_schema
 
 data:
-  data_path: /Users/Gustav/Desktop/DesktopV00183/DTU/3rd_exchange/DLBiomed/final_project/DEEP_BIOMED/covid_data.nosync/full_data
-  input_img_size: 48
-  crop_volume_size: 256
+  data_path: /Users/Gustav/Desktop/DesktopV00183/DTU/3rd_exchange/DLBiomed/final_project/DEEP_BIOMED/covid_data.nosync/crop_data
+  input_img_size: 64
+  crop_volume_size: 0
   prob_foreground_center: 0.95
 
 training:
   device: cpu
   train_batch_size: 16
   val_batch_size: 16
-  batches_per_epoch: 100
+  batches_per_epoch: 1
   num_epochs: 20
   loss_fn_name: maskedDiceLoss
 

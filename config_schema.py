@@ -1,10 +1,7 @@
-from dataclasses import dataclass
-
+from dataclasses import dataclass, field
 from hydra.core.config_store import ConfigStore
 from omegaconf import MISSING
-from dataclasses import field
-from typing import Any
-from typing import List
+from typing import Any, List, Optional
 
 def register_config():
     ConfigStore.instance().store(name="config_schema", node=ConfigSchema)
@@ -35,7 +32,8 @@ class OptimizerConfig:
 @dataclass
 class ModelConfig:
     model_type: str = MISSING
-    pretrained_model: str = "resnet18_3D"
+    pretrained_model: Optional[str] = None
+    freeze_encoder: Optional[bool] = None
 
 
 @dataclass

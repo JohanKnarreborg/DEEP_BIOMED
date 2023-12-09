@@ -95,6 +95,7 @@ def main(config: config_schema.ConfigSchema):
         model = model(
             encoder_name = config.model.pretrained_model,
             encoder_weights = "imagenet",
+            freeze_encoder = config.model.freeze_encoder,
             classes = 2,
             activation = "sigmoid",
             in_channels = 1
@@ -107,7 +108,6 @@ def main(config: config_schema.ConfigSchema):
             out_channels=2
         )
     model.to(config.training.device)
-    print(config.model.pretrained_model)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.optimizer.learning_rate)
 
     print('Starting training')

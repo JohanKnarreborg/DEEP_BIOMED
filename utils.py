@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from skimage.measure import label as skimage_label, regionprops
 from models.unetr_monai import UNETR
 from models.swinunetr_monai import SwinUNETR
@@ -151,6 +152,53 @@ def get_model(model_name):
     return model[model_name]
 
 def count_parameters(model):
+    """
+    Counts the total number of parameters and the number of trainable parameters in a PyTorch model.
+
+    This function iterates through all the parameters of a given PyTorch model, calculating
+    the total number of parameters and distinguishing between trainable and non-trainable
+    parameters. We use it for comparing the complexity of the various models tested.
+
+    Args:
+        model (torch.nn.Module): The PyTorch model for which parameters are counted.
+
+    Returns:
+        tuple: A tuple containing two elements:
+               - The first element is an integer representing the total number of parameters in the model.
+               - The second element is an integer representing the number of trainable parameters in the model.
+    """
     total_params = sum(p.numel() for p in model.parameters())
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     return total_params, trainable_params
+
+def wandb_images(batch_image, unmodified_batch_label, batch_mask, prediction, num_vizs):
+    """
+    Prepares a matplotlib figure with subplots to visualize a batch of images, their labels, masks, and predictions.
+
+    This function creates a figure with four rows of subplots. Each row represents images, labels,
+    masks, and predictions, respectively. The function is used for logging 
+    these visualizations to Weights & Biases (wandb).
+
+    Args:
+        batch_image (torch.Tensor): A batch of images.
+        unmodified_batch_label (dict): A dictionary containing batch labels under the key 'label'.
+        batch_mask (torch.Tensor): A batch of masks.
+        prediction (torch.Tensor): A batch of model predictions.
+        num_vizs (int): Number of visualizations to display from the batch.
+
+    Returns:
+        matplotlib.figure.Figure: A matplotlib figure object containing the subplots for the images, labels, masks, and predictions.
+    """
+    fig, ax = plt.subplots(4, num_vizs, figsize=(18, 8))
+    for i in range(num_vizs):
+        ax[0, i].imshow(batch_image[i, 0, :, :, batch_image.shape[3] // 2], cmap='gray')
+        ax[1, i].imshow(unmodified_batch_label[i, 0, :, :, unmodified_batch_label.shape[3] // 2])
+        ax[2, i].imshow(batch_mask[i, 0, :, :, batch_mask.shape[3] // 2])
+        ax[3, i].imshow(prediction[i, 0, :, :, prediction.shape[3] // 2])
+        if i == 0:
+            ax[0, i].set_ylabel('image')
+            ax[1, i].set_ylabel('label')
+            ax[2, i].set_ylabel('mask')
+            ax[3, i].set_ylabel('prediction')
+    plt.tight_layout()
+    return fig

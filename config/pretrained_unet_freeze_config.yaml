@@ -1,4 +1,4 @@
-run_name: pretrained_unet
+run_name: pretrained_unet_freeze
 defaults:
   - config_schema
 
@@ -22,4 +22,4 @@ optimizer:
 model:
   model_type: pretrained_unet
   pretrained_model: resnet18_3D
-  freeze_encoder: False
+  freeze_encoder: True
