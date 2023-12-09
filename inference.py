@@ -10,7 +10,7 @@ def main():
     input_img_size = 64
     data_path = './covid_data.nosync/full_data/train/data_0.npy'
     image = torch.from_numpy(np.load(data_path)).float()
-    #image = image[0:64, 0:64, 0:64]
+    image = image[0:64, 0:64, 0:64]
 
     PATCH_SIZE=(input_img_size,) * 3         # Size of crops
     PROB_FOREGROUND_CENTER=0.95 # Probability that center of crop is a labeled foreground voxel (ensures the crops often contain a label)
@@ -50,7 +50,6 @@ def main():
 
     pred = np.uint8(pred[0, 0] * 255)
     #imsave('prediction_'+model_name[:-3]+'_size512.tiff', pred)
-    print(pred.shape)
     imsave('./inference_output/prediction_'+model_name[:-3]+'.tiff', pred)
 
 
