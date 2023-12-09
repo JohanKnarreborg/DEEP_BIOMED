@@ -16,6 +16,7 @@ class pretrained_unet_3D(SegmentationModel):
         encoder_name: str = "resnet18_3D",
         encoder_depth: int = 5,
         encoder_weights: Optional[str] = "imagenet",
+        freeze_encoder: Optional[bool] = False,
         decoder_use_batchnorm: bool = True,
         decoder_channels: List[int] = (256, 128, 64, 32, 16),
         decoder_attention_type: Optional[str] = None,
@@ -33,6 +34,10 @@ class pretrained_unet_3D(SegmentationModel):
             depth=encoder_depth,
             weights=encoder_weights,
         )
+         # Freeze encoder weights if freeze_encoder is True
+        if freeze_encoder:
+            for param in self.encoder.parameters():
+                param.requires_grad = False
 
         self.decoder = UnetDecoder_3D(
             encoder_channels=self.encoder.out_channels,
