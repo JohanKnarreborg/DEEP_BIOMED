@@ -110,7 +110,7 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
                 num_samples += len(image_b)
                 step += 1
             
-            logging_figure = wandb_images(image_b, batch['label'], mask, pred, 8)
+            logging_figure = wandb_images(image_b.cpu(), batch['label'].cpu(), mask.cpu(), pred.cpu(), 8)
             # Save the figure as a PNG file
             #plt.savefig('plot.png')
             run.log({"epoch_validation_examples": wandb.Image(logging_figure)})
