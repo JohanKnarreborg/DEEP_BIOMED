@@ -83,9 +83,7 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
             "epoch_train_time": train_time}
         )
 
-        # TODO: REMEMBER TO CHANGE
-        # epoch % 10 == 0
-        if epoch is not None:
+        if epoch % 10 == 0:
             mean_val_loss = 0
             num_samples = 0
             step = 0
@@ -111,36 +109,7 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
                 step += 1
             
             logging_figure = wandb_images(image_b.cpu(), batch['label'].cpu(), mask.cpu(), pred.cpu(), 8)
-            # Save the figure as a PNG file
-            #plt.savefig('plot.png')
             run.log({"epoch_validation_examples": wandb.Image(logging_figure)})
-
-            # wandb_image = wandb.Image(image_b[0, 0, :, image_b.shape[-1] // 2].numpy(), caption="input volume cross-section")
-            # wandb_label = wandb.Image(label[0, 0, :, :, label.shape[-1] // 2].numpy(), caption="label of cross-section")
-            # wandb_pred = wandb.Image(pred[0, 0, :, :, pred.shape[-1] // 2].numpy(), caption="prediction of cross-section")
-            # images = [wandb_image, wandb_label, wandb_pred]
-            # run.log({
-            #     "epoch_examples": [img for img in images]}
-            # )
-            #torch.save(image_b)
-
-
-            # log image_b, its label and its prediction
-            # print(f"{image_b.shape=}")
-            # print(f"{label.shape=}")
-            # print(f"{pred.shape=}")
-            # logging_image = image_b[-1].permute(1, 2, 3, 0).detach().cpu().numpy() # from [16, 1, 32, 32, 32] to [32, 32, 32, 1]
-            # logging_label = label[-1].permute(1, 2, 3, 0).detach().cpu().numpy() # from [16, 2, 32, 32, 32] to [32, 32, 32, 2]
-            # logging_pred = pred[-1].permute(1, 2, 3, 0).detach().cpu().numpy() # from [16, 2, 32, 32, 32] to [32, 32, 32, 2]
-            # print(f"{logging_image.shape=}")
-            # print(f"{logging_label.shape=}")
-            # print(f"{logging_pred.shape=}")
-            # run.log(
-            #     {"epoch_val_loss": mean_val_loss, 
-            #     "image": wandb.Object3D(logging_image), 
-            #     "label": wandb.Object3D(logging_label), 
-            #     "prediction": wandb.Object3D(logging_pred)} 
-            # )
 
             val_time = time() - t0
             mean_val_loss = mean_val_loss / num_samples
