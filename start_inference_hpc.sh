@@ -1,7 +1,7 @@
 #!/bin/sh
 #BSUB -J dlbioproject
 #BSUB -o  /zhome/fc/b/143004/DEEP_BIOMED/outfiles/dlbioproject_%J.out
-#BSUB -e / /zhome/fc/b/143004/DEEP_BIOMED/errorfiles/dlbioproject_%J.err
+#BSUB -e  /zhome/fc/b/143004/DEEP_BIOMED/errorfiles/dlbioproject_%J.err
 #BSUB -q gpuv100
 #BSUB -gpu "num=1" 
 #BSUB -n 4
