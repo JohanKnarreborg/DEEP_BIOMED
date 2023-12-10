@@ -10,10 +10,10 @@
 #BSUB -W 24:00
 # end of BSUB options
 
-module swap python3/3.8.17
+module swap python3/3.7.17
 python3 -m venv DLBio_finalProjectv
 source DLBio_finalProjectv/bin/activate
-python3 -m pip install -r /zhome/fc/b/143004/DEEP_BIOMED/requirements.txt
+python3 -m pip install -r /zhome/fc/b/143004/DEEP_BIOMED/requirements2.txt
 
 cd /zhome/fc/b/143004/DEEP_BIOMED/covid_data.nosync/full_data
 dvc pull
