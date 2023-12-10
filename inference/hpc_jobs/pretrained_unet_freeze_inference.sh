@@ -13,7 +13,7 @@
 module load python3/3.8.17
 python3 -m venv /zhome/f9/2/183623/DEEP_BIOMED/DLBio_inferencev
 source /zhome/f9/2/183623/DEEP_BIOMED/DLBio_inferencev/bin/activate
-python3 -m pip install -r /zhome/f9/2/183623/DEEP_BIOMED/inference/requirements2.txt
+python3 -m pip install -r /zhome/f9/2/183623/DEEP_BIOMED/inference/requirements.txt
 
 cd /zhome/f9/2/183623/DEEP_BIOMED/covid_data.nosync/full_data
 dvc pull

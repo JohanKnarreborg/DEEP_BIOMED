@@ -7,46 +7,66 @@ The project aims to develop a deep learning model that can segment blood vessels
 ## Code structure
 The code of the project is developed in Python 3.8, and uses Hydra for configuration management. The code is structured as follows:
     
-    ```
-    DEEP_BIOMED
-    │   README.md               # This file
-    │   requirements.txt        # Required packages to run the main script
-    │   config_schema.py        # The schema that the configuration files must follow
-    │   main.py                 # Main script to run the code - sets up data, model and calls the trainer
-    |   dataset.py              # A RepeatedCacheDataset class that is used to load and define the training data
-    |   trainer.py              # The training loop, logging to Weights and Biases, and evaluation
-    |   unetr_monai.py          # The UNETR model from MONAI - not developed by us
-    |   utils.py                # Utility functions; transformations, loss function retrieval, etc.
-    |   config                  # Folder that contains the Hydra configuration files to run experiments
-    |   |   cloud_config.yaml   # The configuration to run the code on Google Cloud (Not working yet)
-    |   |   dtuhpc.yaml         # The configuration to run the code on DTU HPC (remember to change the paths)
-    |   |   localGustav.yaml    # The configuration to run the code on a local machine (remember to change the paths)
-
-    ```
+```
+README.md               # This file
+covid_data.nosync
+|   crop_data           # Folder for storing 256x256x256 crop of the full volume
+|   |   ...
+|   full_data           # Folder for storing the full volume
+|   |   ...
+inference               # Folder for storing the code and outputs related to the inference step of our models
+|   inference.py        # Inference script that loads a model and runs it on the test data
+|   requirements2.txt   # Required packages to run the inference script
+|   hpc_jobs            # Folder for storing scripts needed for running the HPC jobs
+|   |   ...
+|   inference_outputs   # Folder for storing the outputs of the inference step
+|   |   ...
+training                # Folder for storing the code and outputs related to the training our models
+|   config              # Folder that contains the Hydra configuration files to run experiments
+|   |   ...
+|   hpc_jobs            # Folder for storing scripts needed for running the training on HPC jobs
+|   |   ...
+|   models              # Folder for storing code related to initializing of the models
+|   |   unet_3D.py      # Pretrained 3D UNET model using a resnet backbone - not developed by us
+|   |   unetr_monai.py  # UNETR model copied from Monai - not developed by us
+|   |   ...
+|   config_schema.py    # The schema that the configuration files must follow
+|   dataset.py          # A RepeatedCacheDataset class that is used to load and define the training data
+|   main.py             # Main script to run the code - sets up data, model and calls the trainer
+|   trainer.py          # The training loop, logging to Weights and Biases, and evaluation
+|   utils.py            # Utility functions; transformations, loss function retrieval, etc.
+```
 
 ## How to run the code
-To run the code, irrespective of local, cloud, hpc, or other, we recommend creating a new virtual environment with Python 3.8.\
-From this environment, run the following command to install the required packages:
+To secure reproducibility we detail in the following how to setup and run the code to achieve the results presented in the report.\
+Because of the substantial amount of RAM required to load the data both training and inference has been tested in various environments to achieve the results presented in the report.\
+Both for training and inference of the models, we used a high performance computing (HPC) cluster accesible through our home university, DTU, which gave us access to running on a node with 1 NVIDIA Tesla V100 GPU.\
+We have tested the code locally on M1 Macbooks (which is really slow), and we were not able to execute the code on either Google Colab nor Google Cloud - keep this in mind if you want to run the code yourself.\
+### Training
+The steps of setting up the training environment and running an experiment are as follows:
+1. Clone the repository to your local machine
+2. Create a new environment with the required packages\
+    We provide a requirements file in `training/requirements.txt`, that can be used to create a new environment with the required packages to perform a training experiment.
+3. Download data from our public Google Cloud bucket\
+    We use a data version control (dvc) setup that allows us to retrieve the data from a public Google Cloud bucket using a simple `dvc pull`-command - hence too download the full_data and crop_data folders, run this command from the root of their respective repositories.
+4. Create a new experiment on Weights and Biases
+5. Create a new configuration file\
+    We use Hydra for configuration management, and to run an experiment you need to create a new configuration file in `training/config/` that follows the schema in `training/config_schema.py`. See `training/config/unet_config.yaml` for an example.
+6. Run the experiment\
+    To run the experiment, you need to run the following command from the root of the repository:\
+    `python main.py --config-name {name of config file (without file extension)}`\
+    This command will start the experiment and you should be able to monitor the training process on Weights and Biases.
 
-    pip install -r requirements.txt
+### Inference
+1. Clone the repository to your local machine
+2. Create a new environment with the required packages\
+    We provide a requirements file in `inference/requirements.txt`, that can be used to create a new environment.
+3. Download data from our public Google Cloud bucket. Inference needs the full data.\
+    We use a data version control (dvc) setup that allows us to retrieve the data from a public Google Cloud bucket using a simple `dvc pull`-command - hence too download the full_data folder, run this command from the root of the full_data-repository.
+4. Download the model weights??
+5. Run the inference script\
+    To run the inference script, you ...
 
-To run the code you need to have the code locally from where you are trying to run it, and then place it in a folder with a `train` and `val` folder, like this (and remember to change the paths in the configuration file):
-    
-    ```
-    data
-    │   train
-    │   |   data_0.npy
-    |   |   mask_0.npy
-    │   val
-    │   |   data_0.npy
-    |   |   mask_0.npy
-    ```
-    
-Then, you can run the code with the following command:
-
-    python main.py --config-name {name of config file (without file extension)}
-
-This command will start the experiment and you should be able to monitor the training process on Weights and Biases.\
 
 # Related ressources
 ## Project report
@@ -54,9 +74,3 @@ https://www.overleaf.com/project/656b65be3e475fad807ffd63
 
 ## Weights and Biases project
 https://wandb.ai/deep_med_epfl/deep_med_epfl
-
-## URL to the dataset
-https://drive.google.com/drive/folders/1AZvI-ITSUACy1Oik3WyULHDUDZzFydRy?usp=share_link 
-
-## URL to the Google Cloud project
-https://console.cloud.google.com/welcome?project=deeplearning-biomed

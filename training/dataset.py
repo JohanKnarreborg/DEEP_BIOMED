@@ -2,6 +2,10 @@ from monai.data import CacheDataset
 
 class RepeatedCacheDataset(CacheDataset):
     """
+    The code of this function was developed from following course 02510 
+    Deep Learning for Experimental 3D Image Analysis at DTU.
+    See course website here: https://www2.compute.dtu.dk/courses/02510/
+    
     CacheDataset that repeats the data.
     """
 

@@ -6,6 +6,7 @@ import os
 import sys
 import torch
 from skimage.io import imsave
+import scipy.ndimage
 
 # Construct the absolute path to the 'models' directory
 models_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../training'))
@@ -58,7 +59,7 @@ def main(model_type, data_path, wandb_runtime):
     print(f"Setting device to: {device}")
 
     path_to_model = f"./covid_data.nosync/{model_type}/{wandb_runtime}/"
-    # list all files in directory
+    # List all files in directory
     files = os.listdir(path_to_model)
     print(f"Loading model checkpoint at {os.path.join(path_to_model, files[0])}")
     checkpoint = torch.load(os.path.join(path_to_model, files[0]), map_location=device)
@@ -81,8 +82,14 @@ def main(model_type, data_path, wandb_runtime):
     pred = pred.numpy()
     print("Inference done!")
 
-    #Convert to 0-255 and SAVING
+    # Convert to 0-255 and SAVING
     pred = np.uint8(pred[0, 0] * 255)
+
+    # Stuff for visualization
+    # Apply median filter to output volume with kernel size 13 to remove noise
+    pred = scipy.ndimage.median_filter(pred, 13)
+    # Set threshold to 255
+    pred[pred < 255] = 0
     imsave(f"inference/inference_output/prediction_{model_type}{wandb_runtime}.tiff", pred)
 
 

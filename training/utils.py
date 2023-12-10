@@ -21,6 +21,10 @@ from monai.transforms import (
 
 def extract_label_patches(image, label, patch_size):
     """
+    The code of this function was developed from following course 02510 
+    Deep Learning for Experimental 3D Image Analysis at DTU.
+    See course website here: https://www2.compute.dtu.dk/courses/02510/
+
     Extract patches from image where label is non-zero.
 
     For each connected component in label, extract the bounding box.
@@ -78,6 +82,10 @@ def extract_label_patches(image, label, patch_size):
 
 def get_transforms(patch_size, prob_foreground_center):
     """
+    The code of this function was developed from following course 02510 
+    Deep Learning for Experimental 3D Image Analysis at DTU.
+    See course website here: https://www2.compute.dtu.dk/courses/02510/
+
     Generates transformation pipelines for training and validation datasets.
 
     For training, this function creates a series of MONAI transforms that include
