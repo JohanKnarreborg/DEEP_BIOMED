@@ -2,6 +2,8 @@ monai==1.3.0
 torch==2.1.1
 einops==0.7.0
 scikit-image==0.19.2
+pretrainedmodels==0.7.4
+scipy==1.9.1
 dvc
 dvc[gdrive]
 dvc[gs]
