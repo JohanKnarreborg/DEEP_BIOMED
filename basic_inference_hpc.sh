@@ -10,7 +10,7 @@
 #BSUB -W 24:00
 # end of BSUB options
 
-module swap python3/3.8.17
+module load python3/3.7
 python3 -m venv DLBio_finalProjectv
 source DLBio_finalProjectv/bin/activate
 python3 -m pip install --upgrade pip
