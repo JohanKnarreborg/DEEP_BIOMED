@@ -13,10 +13,10 @@
 module load python3/3.8.17
 python3 -m venv /zhome/f9/2/183623/DEEP_BIOMED/DLBio_finalProjectv
 source /zhome/f9/2/183623/DEEP_BIOMED/DLBio_finalProjectv/bin/activate
-python3 -m pip install -r /zhome/f9/2/183623/DEEP_BIOMED/requirements.txt
+python3 -m pip install -r /zhome/f9/2/183623/DEEP_BIOMED/training/requirements.txt
 
 cd /zhome/f9/2/183623/DEEP_BIOMED/covid_data.nosync/crop_data
 dvc pull
-cd /zhome/f9/2/183623/DEEP_BIOMED/
+cd /zhome/f9/2/183623/DEEP_BIOMED/training/
 
-python -u /zhome/f9/2/183623/DEEP_BIOMED/main.py --config-name unet_config
+python -u /zhome/f9/2/183623/DEEP_BIOMED/main.py --config-name unetr_config
