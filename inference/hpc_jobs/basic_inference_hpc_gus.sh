@@ -17,8 +17,6 @@ python3 -m pip install -r /zhome/f9/2/183623/DEEP_BIOMED/inference/requirements2
 
 cd /zhome/f9/2/183623/DEEP_BIOMED/covid_data.nosync/full_data
 dvc pull
-cd /zhome/f9/2/183623/DEEP_BIOMED/trained_models
-dvc pull 
 
 cd /zhome/f9/2/183623/DEEP_BIOMED/
 
