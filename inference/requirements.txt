@@ -3,7 +3,7 @@ torch==2.1.1
 einops==0.7.0
 scikit-image==0.19.2
 pretrainedmodels==0.7.4
-scipy==1.9.1
+scipy>=1.10.0
 dvc
 dvc[gdrive]
 dvc[gs]
