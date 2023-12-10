@@ -57,10 +57,10 @@ def main(model_type, data_path, wandb_runtime):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Setting device to: {device}")
 
-    print("Loading model checkpoint")
     path_to_model = f"./covid_data.nosync/{model_type}/{wandb_runtime}/"
     # list all files in directory
     files = os.listdir(path_to_model)
+    print(f"Loading model checkpoint at {os.path.join(path_to_model, files[0])}")
     checkpoint = torch.load(os.path.join(path_to_model, files[0]), map_location=device)
     model.load_state_dict(checkpoint['model_state_dict'])
 
@@ -73,7 +73,7 @@ def main(model_type, data_path, wandb_runtime):
             image[None, None],
             PATCH_SIZE,
             INFERENCE_BATCH_SIZE,
-            lambda x: model(x.to(device)).softmax(dim=1).cpu(),  # send patch to GPU, run model, call softmax, send result back to CPU
+            lambda x: model(torch.repeat_interleave(x, 3, dim=1).to(device) if model_type == "pretrained_unet" or model_type == "pretrained_unet_freeze" else x.to(device)).softmax(dim=1).cpu(),  # send patch to GPU, run model, call softmax, send result back to CPU
             overlap=WINDOW_OVERLAP,
             mode='gaussian',
             progress=True,
