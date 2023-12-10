@@ -41,6 +41,7 @@ def main(model_type, data_path, wandb_runtime):
     elif model_type == "pretrained_unet" or model_type == "pretrained_unet_freeze":
         model = pretrained_unet_3D(
             encoder_name = "resnet18_3D",
+            weights = "imagenet",
             classes = 2,
             activation = "sigmoid",
             in_channels = 1
