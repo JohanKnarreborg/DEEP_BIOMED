@@ -53,8 +53,8 @@ def main(model_type, data_path, wandb_runtime):
             out_channels=2
         )
 
-    print("Setting device to: ")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Setting device to: {device}")
 
     print("Loading model checkpoint")
     path_to_model = f"./covid_data.nosync/{model_type}/{wandb_runtime}/"
@@ -65,6 +65,7 @@ def main(model_type, data_path, wandb_runtime):
 
     print("Starting inference")
     model.eval()
+    model.to(device)
     with torch.no_grad():
         # Evaluate the model on the image using MONAI sliding window inference
         pred = sliding_window_inference(
