@@ -131,7 +131,7 @@ def train_loop(config, model, train_loader, val_loader, loss_fn, optimizer):
         print('Epoch', epoch + 1, 'train loss', mean_train_loss.item(), 'val loss', mean_val_loss.item(), 'train time', train_time, 'seconds val time', val_time, 'seconds')
     # save the best model in the end
     torch.save(model_dict, model_save_path)
-    artifact = wandb.Artifact(name=f"{config.model.model_type}_best_model", type="data")
+    artifact = wandb.Artifact(name=f"{config.model.model_type}_{current_datetime}_best_model", type="model")
     artifact.add_file(model_save_path)
     run.log_artifact(artifact)
     return model_save_path
