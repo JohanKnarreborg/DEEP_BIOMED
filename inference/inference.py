@@ -85,6 +85,7 @@ def main(model_type, data_path, wandb_runtime):
     # Convert to 0-255 and SAVING
     pred = np.uint8(pred[0, 0] * 255)
 
+    print("Starting median filter and thresholding")
     # Stuff for visualization
     # Apply median filter to output volume with kernel size 13 to remove noise
     pred = scipy.ndimage.median_filter(pred, 13)
