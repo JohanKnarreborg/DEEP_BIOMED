@@ -83,7 +83,7 @@ def main(model_type, data_path, wandb_runtime):
 
     #Convert to 0-255 and SAVING
     pred = np.uint8(pred[0, 0] * 255)
-    imsave(f'inference/inference_output/prediction_' + {model_type} + {wandb_runtime} + '.tiff', pred)
+    imsave(f"inference/inference_output/prediction_{model_type}{wandb_runtime}.tiff", pred)
 
 
 if __name__ == "__main__":
