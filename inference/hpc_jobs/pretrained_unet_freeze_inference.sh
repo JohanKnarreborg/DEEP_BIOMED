@@ -20,4 +20,4 @@ dvc pull
 
 cd /zhome/f9/2/183623/DEEP_BIOMED/
 
-python -u /zhome/f9/2/183623/DEEP_BIOMED/inference/inference.py 
+python -u /zhome/f9/2/183623/DEEP_BIOMED/inference/inference.py --model_type pretrained_unet_freeze --data_path ./covid_data.nosync/full/train/data_0.npy --wandb_runtime 2023-12-09_23-51
