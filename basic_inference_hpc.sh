@@ -5,12 +5,12 @@
 #BSUB -q gpuv100
 #BSUB -gpu "num=1" 
 #BSUB -n 4
-#BSUB -R "rusage[mem=16GB]" 
+#BSUB -R "rusage[mem=16GB]"
 #BSUB -R "span[hosts=1]"
 #BSUB -W 24:00
 # end of BSUB options
 
-module load python3/3.10.8
+module load python3/3.8.17
 python3 -m venv DLBio_finalProjectv
 source DLBio_finalProjectv/bin/activate
 python3 -m pip install --upgrade pip
