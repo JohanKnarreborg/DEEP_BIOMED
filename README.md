@@ -2,7 +2,8 @@
 This repository contains the code for the final exam project in Deep Learning in Biomedicine (CS-502) @ EPFL Autumn 2023.
 
 ## Project description
-The project aims to develop a deep learning model that can segment blood vessels ...
+The project aims to develop a deep learning model to segment the myocardium vasculature and investigate the performance difference between the traditional U-Net and the more novel U-NETR on this task. Moreover, we implement the possibility of using a pretrained model that we report results for using fine-tuning.\
+In this way, we investigate the performance of the different models to be able to reason about the effects of various model types and training strategies on a complex biomedical segmentation task.
 
 ## Code structure
 The code of the project is developed in Python 3.8, and uses Hydra for configuration management. The code is structured as follows:
@@ -37,7 +38,7 @@ training                # Folder for storing the code and outputs related to the
 |   utils.py            # Utility functions; transformations, loss function retrieval, etc.
 ```
 
-## How to run the code
+## Quickstart
 To secure reproducibility we detail in the following how to setup and run the code to achieve the results presented in the report.\
 Because of the substantial amount of RAM required to load the data both training and inference has been tested in various environments to achieve the results presented in the report.\
 Both for training and inference of the models, we used a high performance computing (HPC) cluster accesible through our home university, DTU, which gave us access to running on a node with 1 NVIDIA Tesla V100 GPU.\
@@ -65,7 +66,15 @@ The steps of setting up the training environment and running an experiment are a
     We use a data version control (dvc) setup that allows us to retrieve the data from a public Google Cloud bucket using a simple `dvc pull`-command - hence too download the full_data folder, run this command from the root of the full_data-repository.
 4. Download the model weights??
 5. Run the inference script\
-    To run the inference script, you ...
+    To run the inference script, you need to run the following command from the root of this repository:\
+    `python inference/inference.py --model_type {model_type_string} --data_path {path_to_downloaded_data} --wandb_runtime {datetime_of_experiment_run}`\
+    The `model_type_string` is the name of the model you want to run inference on, e.g. `unet`.\
+    The `data_path` is the path to the downloaded data, e.g. `../full_data`.\
+    The `wandb_runtime` is the datetime of the experiment run, e.g. `2023-12-10_12-22`.\
+    Together, the model_type_string and wandb_runtime uniquely identifies the experiment run on Weights and Biases, and the inference script will load the model weights.\
+    The inference script will run the model on the test data and save the inference volume in the `inference_outputs` folder.
+6. Visualize the results\
+    Use a visualization tool of your choice to visualize the results. We used tomviz, which is a 3D visualization tool for tomographic data.\
 
 
 # Related ressources
