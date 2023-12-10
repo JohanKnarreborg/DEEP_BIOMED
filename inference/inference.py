@@ -60,7 +60,7 @@ def main(model_type, data_path, wandb_runtime):
     path_to_model = f"./covid_data.nosync/{model_type}/{wandb_runtime}/"
     # list all files in directory
     files = os.listdir(path_to_model)
-    checkpoint = torch.load(files[0], map_location=device)
+    checkpoint = torch.load(os.path.join(path_to_model, files[0]), map_location=device)
     model.load_state_dict(checkpoint['model_state_dict'])
 
     print("Starting inference")
