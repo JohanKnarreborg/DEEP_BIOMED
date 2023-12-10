@@ -89,4 +89,4 @@ if __name__ == "__main__":
     parser.add_argument('--wandb_runtime', type=str, default="2023-12-10_12-22", help="Wandb runtime")
 
     args = parser.parse_args()
-    main(args.model_type, args.model_path, args.data_path)
+    main(args.model_type, args.data_path, args.wandb_runtime)
