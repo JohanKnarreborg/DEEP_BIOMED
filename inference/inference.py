@@ -57,7 +57,7 @@ def main(model_type, data_path, wandb_runtime):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     print("Loading model checkpoint")
-    path_to_model = f"{model_type}/{wandb_runtime}/"
+    path_to_model = f"./covid_data.nosync/{model_type}/{wandb_runtime}/"
     # list all files in directory
     files = os.listdir(path_to_model)
     checkpoint = torch.load(files[0], map_location=device)
