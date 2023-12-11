@@ -153,8 +153,7 @@ def get_model(model_name):
     model = {
         "unet": UNet,
         "pretrained_unet": pretrained_unet_3D,
-        "unetr": UNETR,
-        "swin_unetr": SwinUNETR
+        "unetr": UNETR
     }
     return model[model_name]
 
