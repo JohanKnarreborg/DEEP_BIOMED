@@ -5,12 +5,12 @@ This repository contains the code for the final exam project in Deep Learning in
 The project aims to develop a deep learning model to segment the myocardium vasculature and investigate the performance difference between the traditional U-Net and the more novel U-NETR on this task. Moreover, we implement the possibility of using a pretrained model that we report results for using fine-tuning.\
 In this way, we investigate the performance of the different models to be able to reason about the effects of various model types and training strategies on a complex biomedical segmentation task.
 
-## Quickstart
+## 🚀 Quickstart 🚀
 To secure reproducibility we detail in the following how to setup and run the code to achieve the results presented in the report.\
 Because of the substantial amount of RAM required to load the data both training and inference has been tested in various environments to achieve the results presented in the report.\
 Both for training and inference of the models, we used a high performance computing (HPC) cluster accesible through our home university, DTU, which gave us access to running on a node with 1 NVIDIA Tesla V100 GPU.\
 We have tested the code locally on M1 Macbooks (which is really slow), and we were not able to execute the code on either Google Colab nor Google Cloud - keep this in mind if you want to run the code yourself.\
-### Training
+### 🚂 Training 🚂
 The steps of setting up the training environment and running an experiment are as follows:
 1. **Clone the repository to your local machine**
 2. **Create a new environment with the required packages**\
@@ -25,7 +25,7 @@ The steps of setting up the training environment and running an experiment are a
     `python main.py --config-name {name of config file (without file extension)}`\
     This command will start the experiment and you should be able to monitor the training process on Weights and Biases.
 
-### Inference
+### 🧠 Inference 🧠
 1. **Clone the repository to your local machine**
 2. **Create a new environment with the required packages**\
     We provide a requirements file in `inference/requirements.txt`, that can be used to create a new environment.
@@ -45,7 +45,7 @@ The steps of setting up the training environment and running an experiment are a
 6. **Visualize the results**\
     Use a visualization tool of your choice to visualize the results. We used tomviz, which is a 3D visualization tool for tomographic data.\
 
-## Code structure
+## 👨‍💻 Code structure 👩‍💻
 The code of the project is developed in Python 3.8, and uses Hydra for configuration management. The code is structured as follows:
     
 ```
