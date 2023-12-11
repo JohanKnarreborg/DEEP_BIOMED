@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from skimage.measure import label as skimage_label, regionprops
 from models.unetr_monai import UNETR
-from models.swinunetr_monai import SwinUNETR
 from models.unet_3D import pretrained_unet_3D
 
 from monai.networks.nets import UNet
