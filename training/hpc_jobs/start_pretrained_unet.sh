@@ -19,4 +19,4 @@ cd /zhome/f9/2/183623/DEEP_BIOMED/covid_data.nosync/crop_data
 dvc pull
 cd /zhome/f9/2/183623/DEEP_BIOMED/training/
 
-python -u /zhome/f9/2/183623/DEEP_BIOMED/main.py --config-name pretrained_unet_config
+python -u /zhome/f9/2/183623/DEEP_BIOMED/training/main.py --config-name pretrained_unet_config
