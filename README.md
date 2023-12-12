@@ -5,7 +5,7 @@ This repository contains the code for the final exam project in Deep Learning in
 The project aims to develop a deep learning model to segment the myocardium vasculature and investigate the performance difference between the traditional UNET and the more novel UNETR on this task. Moreover, we implement the possibility of using a pre-trained model that we report results for using fine-tuning.\
 In this way, we investigate the performance of the different models to be able to reason about the effects of various model types and training strategies on a complex biomedical segmentation task.
 
-![UNETR](https://github.com/JohanKnarreborg/DEEP_BIOMED/blob/main/UNETR_output.gif)
+![UNETR](https://github.com/JohanKnarreborg/DEEP_BIOMED/blob/main/UNETR.gif)
 
 ## 🚀 Quickstart 🚀
 To secure reproducibility we detail in the following how to setup and run the code to achieve the results presented in the report.\
