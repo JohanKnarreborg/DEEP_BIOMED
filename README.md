@@ -32,7 +32,7 @@ The steps of setting up the training environment and running an experiment are a
 3. **Download data from our public Google Cloud bucket. Inference needs the full data.**\
     We use a data version control (dvc) setup that allows us to retrieve the data from a public Google Cloud bucket using a simple `dvc pull`-command - hence to download the full_data folder, run this command from the root of the full_data-repository.
 4. **Download the model weights or train a new model**\
-    If you want to run inference on a model that we have trained, you need to download the model weights. We provide these for a UNETR model trained for 200 epochs on the crop data due to computation. Download here: https://storage.googleapis.com/dlbio_storage/unetr_10122023.pt and place in a folder called `unetr` in the root of `covid_data.nosync`, i.e. `covid_data.nosync/unetr/unetr.pt`.\
+    If you want to run inference on a model that we have trained, you need to download the model weights. We provide these for a UNETR model trained for 200 epochs on the crop data due to computation. Download here: https://storage.googleapis.com/dlbio_storage/unetr_10122023.pt and place in a folder called `unetr` in the root of `covid_data.nosync`, i.e. `covid_data.nosync/unetr/2023-12-10_12-22/unetr.pt`, where `2023-12-10_12-22` is the `wandb_runtime` specified in the next step and is not relevant for only running inference.\
     If you want to train a new model, you need to follow the steps in the training section above.
 5. **Run the inference script**\
     To run the inference script, you need to run the following command from the root of this repository:\
