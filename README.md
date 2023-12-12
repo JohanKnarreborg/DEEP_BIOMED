@@ -6,8 +6,9 @@ The project aims to develop a deep learning model to segment the myocardium vasc
 In this way, we investigate the performance of the different models to be able to reason about the effects of various model types and training strategies on a complex biomedical segmentation task.
 
 <p align="center">
-![UNETR](https://github.com/JohanKnarreborg/DEEP_BIOMED/blob/main/UNETR.gif)
+  <img width="600" height="200" src="https://github.com/JohanKnarreborg/DEEP_BIOMED/blob/main/UNETR.gif">
 </p>
+
 
 ## 🚀 Quickstart 🚀
 To secure reproducibility we detail in the following how to setup and run the code to achieve the results presented in the report.\
