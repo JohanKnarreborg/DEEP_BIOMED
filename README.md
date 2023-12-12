@@ -11,7 +11,7 @@ In this way, we investigate the performance of the different models to be able t
 To secure reproducibility we detail in the following how to setup and run the code to achieve the results presented in the report.\
 Because of the substantial amount of RAM required to load the data both training and inference have been tested in various environments to achieve the results presented in the report.\
 Both for training and inference of the models, we used a high-performance computing (HPC) cluster accessible through our home university, DTU, which gave us access to running on a node with 1 NVIDIA Tesla V100 GPU.\
-We have tested the code locally on M1 Macbooks (which is really slow), and we were not able to execute the code on neither Google Colab nor Google Cloud - keep this in mind if you want to run the code yourself.
+We have tested the code locally on M1 Macbooks (which is really slow), and we were not able to execute the code on either Google Colab or Google Cloud - keep this in mind if you want to run the code yourself.
 ### 🚂 Training 🚂
 The steps of setting up the training environment and running an experiment are as follows:
 1. **Clone the repository to your local machine**
