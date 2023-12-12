@@ -1,5 +1,0 @@
-outs:
-- md5: d7e7e2a47989f3eb6ff29430ec8bf4bc
-  size: 1112227644
-  hash: md5
-  path: best_model_img_size_64_epoch170.pt

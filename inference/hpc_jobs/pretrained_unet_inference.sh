@@ -18,6 +18,8 @@ python3 -m pip install -r /zhome/f9/2/183623/DEEP_BIOMED/inference/requirements.
 cd /zhome/f9/2/183623/DEEP_BIOMED/covid_data.nosync/full_data
 dvc pull
 
+rm -rf /zhome/f9/2/183623/DEEP_BIOMED/covid_data.nosync/full_data/val
+
 cd /zhome/f9/2/183623/DEEP_BIOMED/
 
 python -u /zhome/f9/2/183623/DEEP_BIOMED/inference/inference.py --model_type pretrained_unet --data_path /zhome/f9/2/183623/DEEP_BIOMED/covid_data.nosync/full_data/train/data_0.npy --wandb_runtime 2023-12-09_23-51
