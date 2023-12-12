@@ -80,9 +80,5 @@ training                # Folder for storing the code and outputs related to the
 |   utils.py            # Utility functions; transformations, loss function retrieval, etc.
 ```
 
-# Related resources
-## Project report
-https://www.overleaf.com/project/656b65be3e475fad807ffd63 
-
-## Weights and Biases project
+# Weights and Biases project
 https://wandb.ai/deep_med_epfl/deep_med_epfl
