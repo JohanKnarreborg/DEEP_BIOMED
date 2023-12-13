@@ -8,7 +8,7 @@ In this way, we investigate the performance of the different models to be able t
 <div align="center">
   <img width="400" src="https://github.com/JohanKnarreborg/DEEP_BIOMED/blob/main/UNETR.gif">
   <br>
-  <em>Segmented blood vessels of an input volume 🤯</em>
+  <em>Segmented blood vessels of an input volume using UNETR model🤯</em>
 </div>
 
 
