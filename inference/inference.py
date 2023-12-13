@@ -17,6 +17,17 @@ from models.unetr_monai import UNETR
 from models.unet_3D import pretrained_unet_3D
 
 def main(model_type, data_path, wandb_runtime):
+    """
+    Perform inference using a trained model on a given input volume.
+
+    Args:
+        model_type (str): The type of model to use for inference.
+        data_path (str): The path to the input image data.
+        wandb_runtime (str): The runtime identifier for WandB.
+
+    Returns:
+        None
+    """
     input_img_size = 64
     PATCH_SIZE = (input_img_size,) * 3
     INFERENCE_BATCH_SIZE = 16
@@ -84,12 +95,6 @@ def main(model_type, data_path, wandb_runtime):
 
     # Convert to 0-255 and SAVING
     pred = np.uint8(pred[0, 0] * 255)
-
-    # print("Starting median filter")
-    # # Stuff for visualization
-    # # Apply median filter to output volume with kernel size 13 to remove noise
-    # pred = scipy.ndimage.median_filter(pred, 13)
-    # print("Finished median filter")
     imsave(f"inference/inference_output/prediction_{model_type}{wandb_runtime}.tiff", pred)
 
 
